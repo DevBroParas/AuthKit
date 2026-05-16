@@ -1,0 +1,239 @@
+# =========================================================
+# ROOT .gitignore
+# Stack:
+# - Frontend: Next.js + TypeScript
+# - Backend: Node.js + TypeScript
+# - SDK packages
+# - Tests
+# =========================================================
+
+# =========================================================
+# Dependencies
+# =========================================================
+node_modules/
+.pnpm-store/
+.pnp/
+.pnp.js
+
+# Package managers
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+bun.lockb
+
+# Keep lock files if you want reproducible installs
+# Remove the above lines if you want them tracked
+
+# =========================================================
+# Build Outputs
+# =========================================================
+dist/
+build/
+out/
+coverage/
+.nyc_output/
+
+# TypeScript
+*.tsbuildinfo
+
+# Turbo / Nx / Monorepo
+.turbo/
+nx-cache/
+
+# =========================================================
+# Next.js
+# =========================================================
+.next/
+.vercel/
+
+# Next export
+out/
+
+# =========================================================
+# Node.js Logs
+# =========================================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Runtime
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# =========================================================
+# Environment Variables
+# =========================================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+
+# Keep example envs
+!.env.example
+!.env.sample
+
+# =========================================================
+# OS Generated Files
+# =========================================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================================================
+# IDE / Editors
+# =========================================================
+
+# VSCode
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# JetBrains
+.idea/
+
+# Vim
+*.swp
+*.swo
+
+# =========================================================
+# Testing
+# =========================================================
+
+# Jest
+jest-cache/
+
+# Playwright
+playwright-report/
+playwright/.cache/
+test-results/
+
+# Cypress
+cypress/videos/
+cypress/screenshots/
+cypress/downloads/
+
+# Vitest
+vitest-report/
+
+# =========================================================
+# SDK / Generated Clients
+# =========================================================
+
+# Generated SDKs
+generated/
+sdk/generated/
+clients/generated/
+
+# OpenAPI / Swagger generated files
+.openapi-generator/
+.openapi-generator-ignore
+
+# =========================================================
+# Temporary Files
+# =========================================================
+tmp/
+temp/
+.tmp/
+.cache/
+
+# =========================================================
+# Docker
+# =========================================================
+docker-data/
+*.tar
+
+# =========================================================
+# Local Databases
+# =========================================================
+*.sqlite
+*.sqlite3
+*.db
+
+# =========================================================
+# Secrets / Certificates
+# =========================================================
+*.pem
+*.key
+*.crt
+*.p12
+
+# =========================================================
+# Debug
+# =========================================================
+*.tgz
+
+# =========================================================
+# Misc
+# =========================================================
+.cache-loader/
+.eslintcache
+
+# =========================================================
+# Optional uploads/storage
+# =========================================================
+uploads/
+storage/
+public/uploads/
+
+# =========================================================
+# Mac/Linux hidden files
+# =========================================================
+.fuse_hidden*
+.nfs*
+
+# =========================================================
+# Ignore compiled JS if using TS source only
+# =========================================================
+*.js
+*.js.map
+*.d.ts
+
+# EXCEPT config files
+!next.config.js
+!next.config.mjs
+!postcss.config.js
+!tailwind.config.js
+!eslint.config.js
+!jest.config.js
+!vite.config.js
+!vitest.config.js
+
+# =========================================================
+# Keep source files
+# =========================================================
+!src/**/*.js
+!src/**/*.d.ts
+
+# =========================================================
+# Monorepo apps/packages examples
+# =========================================================
+apps/*/dist/
+apps/*/.next/
+packages/*/dist/
+packages/*/build/
+
+# =========================================================
+# Terraform (if used)
+# =========================================================
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# =========================================================
+# Serverless
+# =========================================================
+.serverless/
+
+# =========================================================
+# End
+# =========================================================

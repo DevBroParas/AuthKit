@@ -1,0 +1,2 @@
+ALTER TABLE "projects" ADD CONSTRAINT "projects_publishable_key_unique" UNIQUE("publishable_key");--> statement-breakpoint
+ALTER TABLE "projects" ADD CONSTRAINT "projects_secret_key_unique" UNIQUE("secret_key");
