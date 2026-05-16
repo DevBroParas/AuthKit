@@ -118,7 +118,7 @@ router.get("/github/callback", async (req, res) => {
     });
 
     // redirect frontend
-    res.redirect(`http://localhost:3000/auth/callback?token=${token}`);
+    res.redirect(`${process.env.FRONTEND_URL}/auth/callback?token=${token}`);
   } catch (error) {
     console.log(error);
 
@@ -248,7 +248,7 @@ router.get("/google/callback", async (req, res) => {
     });
 
     // redirect frontend
-    res.redirect(`http://localhost:3000/auth/callback?token=${token}`);
+    res.redirect(`${process.env.FRONTEND_URL}/auth/callback?token=${token}`);
   } catch (error) {
     console.log(error);
 
