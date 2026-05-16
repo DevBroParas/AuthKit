@@ -191,12 +191,6 @@ public/uploads/
 .fuse_hidden*
 .nfs*
 
-# =========================================================
-# Ignore compiled JS if using TS source only
-# =========================================================
-*.js
-*.js.map
-*.d.ts
 
 # EXCEPT config files
 !next.config.js
