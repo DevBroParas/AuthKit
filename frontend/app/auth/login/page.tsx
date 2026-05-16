@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { API_URL } from "@/lib/api";
 
 const Login = () => {
     const router = useRouter();
@@ -36,7 +37,7 @@ const Login = () => {
             }
 
             const response = await fetch(
-                "http://localhost:8000/me",
+                `${API_URL}/me`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -72,7 +73,7 @@ const Login = () => {
 
         try {
             window.location.replace(
-                "http://localhost:8000/auth/github");
+                `${API_URL}/auth/github`);
 
             setLoading(true);
         } catch (error) {
@@ -88,7 +89,7 @@ const Login = () => {
 
         try {
             window.location.replace(
-                "http://localhost:8000/auth/google");
+                `${API_URL}/auth/google`);
 
             setLoading(true);
         } catch (error) {

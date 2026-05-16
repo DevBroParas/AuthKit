@@ -59,6 +59,7 @@ import {
     useState,
     useEffect,
 } from "react";
+import { API_URL } from "@/lib/api";
 
 const signupData = [
     {
@@ -128,7 +129,7 @@ export default function ProjectPage() {
 
                     const response =
                         await fetch(
-                            `http://localhost:8000/projects/${projectId}/overview`,
+                            `${API_URL}/projects/${projectId}/overview`,
                             {
                                 headers: {
                                     Authorization:

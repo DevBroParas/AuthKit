@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import {API_URL} from "@/lib/api"
 
 import {
   LayoutDashboard,
@@ -122,7 +123,7 @@ export default function DashboardLayout({
         }
 
         const response = await fetch(
-          "http://localhost:8000/me",
+          `${API_URL}/me`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

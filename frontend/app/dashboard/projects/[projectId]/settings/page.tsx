@@ -56,6 +56,8 @@ import {
     Badge,
 } from "@/components/ui/badge";
 
+import {API_URL} from "@/lib/api";
+
 export default function ProjectSettingsPage() {
 
     const params =
@@ -109,7 +111,7 @@ export default function ProjectSettingsPage() {
 
                 const response =
                     await fetch(
-                        `http://localhost:8000/projects/${projectId}`,
+                        `${API_URL}/projects/${projectId}`,
                         {
                             headers: {
                                 Authorization:
@@ -141,7 +143,7 @@ export default function ProjectSettingsPage() {
 
                 const response =
                     await fetch(
-                        `http://localhost:8000/projects/${projectId}/providers`,
+                        `${API_URL}/projects/${projectId}/providers`,
                         {
                             headers: {
                                 Authorization:
@@ -169,7 +171,7 @@ export default function ProjectSettingsPage() {
 
                 const response =
                     await fetch(
-                        `http://localhost:8000/projects/${projectId}/domains`,
+                        `${API_URL}/projects/${projectId}/domains`,
                         {
                             headers: {
                                 Authorization:
@@ -196,7 +198,7 @@ export default function ProjectSettingsPage() {
             try {
 
                 await fetch(
-                    `http://localhost:8000/projects/${projectId}`,
+                    `${API_URL}/projects/${projectId}`,
                     {
                         method: "PATCH",
 
@@ -232,7 +234,7 @@ export default function ProjectSettingsPage() {
             try {
 
                 await fetch(
-                    `http://localhost:8000/projects/${projectId}/providers/${provider}`,
+                    `${API_URL}/projects/${projectId}/providers/${provider}`,
                     {
                         method: "PATCH",
 
@@ -269,7 +271,7 @@ export default function ProjectSettingsPage() {
             try {
 
                 await fetch(
-                    `http://localhost:8000/projects/${projectId}/domains`,
+                    `${API_URL}/projects/${projectId}/domains`,
                     {
                         method: "POST",
 
@@ -307,7 +309,7 @@ export default function ProjectSettingsPage() {
             try {
 
                 await fetch(
-                    `http://localhost:8000/projects/${projectId}/domains/${domainId}`,
+                    `${API_URL}/projects/${projectId}/domains/${domainId}`,
                     {
                         method: "DELETE",
 
@@ -333,7 +335,7 @@ export default function ProjectSettingsPage() {
             try {
 
                 await fetch(
-                    `http://localhost:8000/projects/${projectId}`,
+                    `${API_URL}/projects/${projectId}`,
                     {
                         method: "DELETE",
 

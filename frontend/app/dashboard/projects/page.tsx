@@ -71,6 +71,8 @@ import {
 } from "@/components/ui/alert";
 import Link from "next/link";
 
+import { API_URL } from "@/lib/api";
+
 type Project = {
     id: string;
     name: string;
@@ -114,7 +116,7 @@ export default function ProjectsPage() {
                 localStorage.getItem("token");
 
             const response = await fetch(
-                "http://localhost:8000/projects",
+                `${API_URL}/projects`,
                 {
                     headers: {
                         Authorization:
@@ -171,7 +173,7 @@ export default function ProjectsPage() {
                 localStorage.getItem("token");
 
             const response = await fetch(
-                "http://localhost:8000/projects",
+                `${API_URL}/projects`,
                 {
                     method: "POST",
 
@@ -230,7 +232,7 @@ export default function ProjectsPage() {
                 localStorage.getItem("token");
 
             const response = await fetch(
-                `http://localhost:8000/projects/${editingProject.id}`,
+                `${API_URL}/projects/${editingProject.id}`,
                 {
                     method: "PATCH",
 
@@ -279,7 +281,7 @@ export default function ProjectsPage() {
                 localStorage.getItem("token");
 
             await fetch(
-                `http://localhost:8000/projects/${projectId}`,
+                `${API_URL}/projects/${projectId}`,
                 {
                     method: "DELETE",
 

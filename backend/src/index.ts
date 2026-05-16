@@ -26,7 +26,7 @@ app.use(
 app.use(cookieParser());
 
 app.get("/", (_, res) => {
-  res.send("Authly API Running");
+  res.send("AuthKit API Running");
 });
 
 app.use("/auth", authRoutes);
