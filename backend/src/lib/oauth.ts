@@ -1,13 +1,15 @@
 import { GitHub, Google } from "arctic";
 
+const BACKEND_URL = process.env.BACKEND_URL!;
+
 export const google = new Google(
   process.env.GOOGLE_CLIENT_ID!,
   process.env.GOOGLE_CLIENT_SECRET!,
-  "http://localhost:8000/auth/google/callback"
+  `${BACKEND_URL}/auth/google/callback`,
 );
 
 export const github = new GitHub(
   process.env.GITHUB_CLIENT_ID!,
   process.env.GITHUB_CLIENT_SECRET!,
-  "http://localhost:8000/auth/github/callback"
+  `${BACKEND_URL}/auth/github/callback`,
 );
