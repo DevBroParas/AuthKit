@@ -410,19 +410,7 @@ router.get("/google/callback", async (req, res) => {
       projectId,
     });
 
-    res.cookie("sdk_access_token", accessToken, {
-      httpOnly: true,
-      secure: false,
-      sameSite: "lax",
-      maxAge: 1000 * 60 * 15,
-    });
-
-    res.cookie("sdk_refresh_token", refreshToken, {
-      httpOnly: true,
-      secure: false,
-      sameSite: "lax",
-      maxAge: 1000 * 60 * 60 * 24 * 30,
-    });
+    setAuthCookies(res, accessToken, refreshToken);
 
     return res.redirect(redirectUrl);
   } catch (error) {
