@@ -10,9 +10,9 @@ export function setAuthCookies(
   res.cookie("sdk_access_token", accessToken, {
     httpOnly: true,
 
-    secure: false,
+    secure: true,
 
-    sameSite: "lax",
+    sameSite: "none",
 
     maxAge: 1000 * 60 * 15,
   });
@@ -22,9 +22,9 @@ export function setAuthCookies(
   res.cookie("sdk_refresh_token", refreshToken, {
     httpOnly: true,
 
-    secure: false,
+    secure: true,
 
-    sameSite: "lax",
+    sameSite: "none",
 
     maxAge: 1000 * 60 * 60 * 24 * 30,
   });
@@ -33,13 +33,13 @@ export function setAuthCookies(
 export function clearAuthCookies(res: Response) {
   res.clearCookie("sdk_access_token", {
     httpOnly: true,
-    secure: false,
-    sameSite: "lax",
+    secure: true,
+    sameSite: "none",
   });
 
   res.clearCookie("sdk_refresh_token", {
     httpOnly: true,
-    secure: false,
-    sameSite: "lax",
+    secure: true,
+    sameSite: "none",
   });
 }

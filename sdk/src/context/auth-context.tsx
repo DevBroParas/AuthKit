@@ -57,48 +57,48 @@ export function AuthKitProvider({
     }
   };
 
-useEffect(() => {
+  useEffect(() => {
 
-  refreshUser();
+    refreshUser();
 
-  window.addEventListener(
-    "focus",
-    refreshUser
-  );
-
-  return () => {
-    window.removeEventListener(
+    window.addEventListener(
       "focus",
       refreshUser
     );
-  };
 
-}, []);
+    return () => {
+      window.removeEventListener(
+        "focus",
+        refreshUser
+      );
+    };
+
+  }, []);
 
   const signInWithGithub =
-  async () => {
+    async () => {
 
-    const redirectUrl =
-      encodeURIComponent(
-        window.location.origin
-      );
+      const redirectUrl =
+        encodeURIComponent(
+          window.location.origin
+        );
 
-    window.location.href =
-      `http://localhost:8000/sdk/oauth/github/start?publishableKey=${publishableKey}&redirectUrl=${redirectUrl}`;
-  };
+      window.location.href =
+        `https://authkitbackend.devbro.site/sdk/oauth/github/start?publishableKey=${publishableKey}&redirectUrl=${redirectUrl}`;
+    };
 
 
   const signInWithGoogle =
-  async () => {
+    async () => {
 
-    const redirectUrl =
-      encodeURIComponent(
-        window.location.origin
-      );
+      const redirectUrl =
+        encodeURIComponent(
+          window.location.origin
+        );
 
-    window.location.href =
-      `http://localhost:8000/sdk/oauth/google/start?publishableKey=${publishableKey}&redirectUrl=${redirectUrl}`;
-  };
+      window.location.href =
+        `https://authkitbackend.devbro.site/sdk/oauth/google/start?publishableKey=${publishableKey}&redirectUrl=${redirectUrl}`;
+    };
 
   const signOut = async () => {
 
