@@ -84,7 +84,7 @@ export function AuthKitProvider({
         );
 
       window.location.href =
-        `http://localhost:8000/sdk/oauth/github/start?publishableKey=${publishableKey}&redirectUrl=${redirectUrl}`;
+        `https://authkitbackend.devbro.site/sdk/oauth/github/start?publishableKey=${publishableKey}&redirectUrl=${redirectUrl}`;
     };
 
 
@@ -97,7 +97,7 @@ export function AuthKitProvider({
         );
 
       window.location.href =
-        `http://localhost:8000/sdk/oauth/google/start?publishableKey=${publishableKey}&redirectUrl=${redirectUrl}`;
+        `https://authkitbackend.devbro.site/sdk/oauth/google/start?publishableKey=${publishableKey}&redirectUrl=${redirectUrl}`;
     };
 
   const signOut = async () => {

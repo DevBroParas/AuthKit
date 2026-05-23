@@ -1,5 +1,5 @@
 const API_URL =
-  "http://localhost:8000";
+  "https://authkitbackend.devbro.site";
 
 export async function getCurrentUser() {
 

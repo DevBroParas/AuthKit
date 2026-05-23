@@ -86,22 +86,22 @@ router.get("/github/start", async (req, res) => {
 
     res.cookie("sdk_oauth_state", state, {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: true,
+      sameSite: "none",
       maxAge: 1000 * 60 * 10,
     });
 
     res.cookie("sdk_project_id", project.id, {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: true,
+      sameSite: "none",
       maxAge: 1000 * 60 * 10,
     });
 
     res.cookie("sdk_redirect_url", redirectUrl, {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: true,
+      sameSite: "none",
       maxAge: 1000 * 60 * 10,
     });
 
