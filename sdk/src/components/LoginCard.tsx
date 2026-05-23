@@ -8,25 +8,34 @@ import {
   useAuth,
 } from "../hooks/useAuth";
 
+import type {
+  AuthKitTheme,
+} from "../lib/theme";
+
+import {
+  useAuthKitTheme,
+} from "../lib/theme";
+
+import {
+  ProviderIcon,
+} from "./provider-icons";
+
 type LoginCardProps = {
   title?: string;
   subtitle?: string;
   providers?: Array<"github" | "google">;
   style?: CSSProperties;
+  theme?: AuthKitTheme;
 };
 
 const cardStyle: CSSProperties = {
   width: "100%",
   maxWidth: 360,
   padding: 24,
-  border: "1px solid #d0d7de",
+  border: "1px solid",
   borderRadius: 8,
-  background: "#ffffff",
-  color: "#111827",
   fontFamily:
     "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif",
-  boxShadow:
-    "0 14px 34px rgba(15, 23, 42, 0.10)",
 };
 
 const titleStyle: CSSProperties = {
@@ -38,7 +47,6 @@ const titleStyle: CSSProperties = {
 
 const subtitleStyle: CSSProperties = {
   margin: "8px 0 0",
-  color: "#57606a",
   fontSize: 14,
   lineHeight: 1.5,
 };
@@ -51,10 +59,8 @@ const buttonStyle: CSSProperties = {
   width: "100%",
   minHeight: 42,
   padding: "0 14px",
-  border: "1px solid #d0d7de",
+  border: "1px solid",
   borderRadius: 6,
-  background: "#ffffff",
-  color: "#111827",
   fontSize: 14,
   fontWeight: 650,
   cursor: "pointer",
@@ -79,21 +85,13 @@ function ProviderMark({
         justifyContent: "center",
         width: 20,
         height: 20,
-        borderRadius: 999,
-        background:
-          provider === "github"
-            ? "#111827"
-            : "#fbbc05",
-        color:
-          provider === "github"
-            ? "#ffffff"
-            : "#111827",
-        fontSize: 12,
-        fontWeight: 800,
-        lineHeight: 1,
+        color: "currentColor",
       }}
     >
-      G
+      <ProviderIcon
+        provider={provider}
+        size={20}
+      />
     </span>
   );
 }
@@ -103,7 +101,11 @@ export function LoginCard({
   subtitle = "Choose a provider to continue.",
   providers = ["github", "google"],
   style,
+  theme = "system",
 }: LoginCardProps) {
+  const tokens =
+    useAuthKitTheme(theme);
+
   const {
     signInWithGithub,
     signInWithGoogle,
@@ -119,6 +121,10 @@ export function LoginCard({
       aria-label="Sign in"
       style={{
         ...cardStyle,
+        borderColor: tokens.border,
+        background: tokens.surfaceRaised,
+        color: tokens.text,
+        boxShadow: tokens.shadow,
         ...style,
       }}
     >
@@ -127,7 +133,12 @@ export function LoginCard({
       </h2>
 
       {subtitle ? (
-        <p style={subtitleStyle}>
+        <p
+          style={{
+            ...subtitleStyle,
+            color: tokens.mutedText,
+          }}
+        >
           {subtitle}
         </p>
       ) : null}
@@ -144,7 +155,12 @@ export function LoginCard({
             key={provider}
             type="button"
             onClick={signIn[provider]}
-            style={buttonStyle}
+            style={{
+              ...buttonStyle,
+              borderColor: tokens.border,
+              background: tokens.buttonSurface,
+              color: tokens.buttonText,
+            }}
           >
             <ProviderMark
               provider={provider}

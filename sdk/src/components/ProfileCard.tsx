@@ -14,10 +14,19 @@ import {
   useAuth,
 } from "../hooks/useAuth";
 
+import type {
+  AuthKitTheme,
+} from "../lib/theme";
+
+import {
+  useAuthKitTheme,
+} from "../lib/theme";
+
 type ProfileCardProps = {
   style?: CSSProperties;
   showEmail?: boolean;
   align?: "left" | "right";
+  theme?: AuthKitTheme;
 };
 
 const baseCardStyle: CSSProperties = {
@@ -25,14 +34,10 @@ const baseCardStyle: CSSProperties = {
   top: "calc(100% + 10px)",
   width: "min(300px, calc(100vw - 24px))",
   padding: 16,
-  border: "1px solid #d0d7de",
+  border: "1px solid",
   borderRadius: 8,
-  background: "#ffffff",
-  color: "#111827",
   fontFamily:
     "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif",
-  boxShadow:
-    "0 18px 42px rgba(15, 23, 42, 0.16)",
   zIndex: 50,
 };
 
@@ -41,8 +46,7 @@ const avatarStyle: CSSProperties = {
   height: 42,
   borderRadius: 999,
   objectFit: "cover",
-  border: "1px solid #e5e7eb",
-  background: "#f3f4f6",
+  border: "1px solid",
   flex: "0 0 auto",
 };
 
@@ -51,7 +55,6 @@ const fallbackAvatarStyle: CSSProperties = {
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",
-  color: "#374151",
   fontSize: 20,
   fontWeight: 800,
 };
@@ -63,11 +66,9 @@ const triggerStyle: CSSProperties = {
   width: 42,
   height: 42,
   padding: 0,
-  border: "1px solid #d0d7de",
+  border: "1px solid",
   borderRadius: 999,
-  background: "#ffffff",
   cursor: "pointer",
-  boxShadow: "0 1px 2px rgba(15, 23, 42, 0.10)",
 };
 
 const nameStyle: CSSProperties = {
@@ -79,7 +80,6 @@ const nameStyle: CSSProperties = {
 
 const emailStyle: CSSProperties = {
   margin: "4px 0 0",
-  color: "#57606a",
   fontSize: 13,
   lineHeight: 1.4,
   overflowWrap: "anywhere",
@@ -92,10 +92,8 @@ const buttonStyle: CSSProperties = {
   minHeight: 38,
   width: "100%",
   padding: "0 14px",
-  border: "1px solid #fecaca",
+  border: "1px solid",
   borderRadius: 6,
-  background: "#fff7f7",
-  color: "#b42318",
   fontSize: 14,
   fontWeight: 650,
   cursor: "pointer",
@@ -111,7 +109,11 @@ export function ProfileCard({
   align = "left",
   style,
   showEmail = true,
+  theme = "system",
 }: ProfileCardProps) {
+  const tokens =
+    useAuthKitTheme(theme);
+
   const [open, setOpen] =
     useState(false);
 
@@ -190,7 +192,12 @@ export function ProfileCard({
         onClick={() => {
           setOpen((current) => !current);
         }}
-        style={triggerStyle}
+        style={{
+          ...triggerStyle,
+          borderColor: tokens.border,
+          background: tokens.buttonSurface,
+          boxShadow: tokens.shadow,
+        }}
       >
         {user.avatar ? (
           <img
@@ -200,6 +207,8 @@ export function ProfileCard({
               ...avatarStyle,
               width: 38,
               height: 38,
+              borderColor: tokens.border,
+              background: tokens.avatarBg,
             }}
           />
         ) : (
@@ -210,6 +219,9 @@ export function ProfileCard({
               width: 38,
               height: 38,
               fontSize: 16,
+              borderColor: tokens.border,
+              background: tokens.avatarBg,
+              color: tokens.text,
             }}
           >
             {getInitial(
@@ -224,6 +236,10 @@ export function ProfileCard({
           aria-label="Profile"
           style={{
             ...baseCardStyle,
+            borderColor: tokens.border,
+            background: tokens.surfaceRaised,
+            color: tokens.text,
+            boxShadow: tokens.menuShadow,
             ...(align === "right"
               ? {
                   right: 0,
@@ -244,12 +260,21 @@ export function ProfileCard({
               <img
                 src={user.avatar}
                 alt=""
-                style={avatarStyle}
+                style={{
+                  ...avatarStyle,
+                  borderColor: tokens.border,
+                  background: tokens.avatarBg,
+                }}
               />
             ) : (
               <span
                 aria-hidden="true"
-                style={fallbackAvatarStyle}
+                style={{
+                  ...fallbackAvatarStyle,
+                  borderColor: tokens.border,
+                  background: tokens.avatarBg,
+                  color: tokens.text,
+                }}
               >
                 {getInitial(
                   user.name || user.email
@@ -267,7 +292,12 @@ export function ProfileCard({
               </h2>
 
               {showEmail ? (
-                <p style={emailStyle}>
+                <p
+                  style={{
+                    ...emailStyle,
+                    color: tokens.mutedText,
+                  }}
+                >
                   {user.email}
                 </p>
               ) : null}
@@ -282,6 +312,9 @@ export function ProfileCard({
             }}
             style={{
               ...buttonStyle,
+              borderColor: tokens.dangerBorder,
+              background: tokens.dangerBg,
+              color: tokens.dangerText,
               marginTop: 18,
             }}
           >

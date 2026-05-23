@@ -8,12 +8,25 @@ import {
   useAuth,
 } from "../hooks/useAuth";
 
+import type {
+  AuthKitTheme,
+} from "../lib/theme";
+
+import {
+  useAuthKitTheme,
+} from "../lib/theme";
+
+import {
+  ProviderIcon,
+} from "./provider-icons";
+
 type AuthProvider = "github" | "google";
 
 type AuthButtonProps = {
   provider?: AuthProvider;
   children?: React.ReactNode;
   style?: CSSProperties;
+  theme?: AuthKitTheme;
 };
 
 const buttonStyle: CSSProperties = {
@@ -23,10 +36,8 @@ const buttonStyle: CSSProperties = {
   gap: 8,
   minHeight: 40,
   padding: "0 14px",
-  border: "1px solid #d0d7de",
+  border: "1px solid",
   borderRadius: 6,
-  background: "#ffffff",
-  color: "#111827",
   fontFamily:
     "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif",
   fontSize: 14,
@@ -37,9 +48,6 @@ const buttonStyle: CSSProperties = {
 
 const logoutButtonStyle: CSSProperties = {
   ...buttonStyle,
-  borderColor: "#fecaca",
-  background: "#fff7f7",
-  color: "#b42318",
 };
 
 const providerLabels: Record<
@@ -64,21 +72,13 @@ function ProviderMark({
         justifyContent: "center",
         width: 18,
         height: 18,
-        borderRadius: 999,
-        background:
-          provider === "github"
-            ? "#111827"
-            : "#fbbc05",
-        color:
-          provider === "github"
-            ? "#ffffff"
-            : "#111827",
-        fontSize: 11,
-        fontWeight: 800,
-        lineHeight: 1,
+        color: "currentColor",
       }}
     >
-      {provider === "github" ? "G" : "G"}
+      <ProviderIcon
+        provider={provider}
+        size={18}
+      />
     </span>
   );
 }
@@ -87,7 +87,10 @@ export function AuthButton({
   provider = "github",
   children,
   style,
+  theme = "system",
 }: AuthButtonProps) {
+  const tokens =
+    useAuthKitTheme(theme);
 
   const {
     user,
@@ -103,6 +106,10 @@ export function AuthButton({
         onClick={signOut}
         style={{
           ...logoutButtonStyle,
+          borderColor: tokens.dangerBorder,
+          background: tokens.dangerBg,
+          color: tokens.dangerText,
+          boxShadow: tokens.shadow,
           ...style,
         }}
       >
@@ -122,6 +129,10 @@ export function AuthButton({
       onClick={signIn}
       style={{
         ...buttonStyle,
+        borderColor: tokens.border,
+        background: tokens.buttonSurface,
+        color: tokens.buttonText,
+        boxShadow: tokens.shadow,
         ...style,
       }}
     >
