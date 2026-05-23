@@ -1,9 +1,14 @@
-const API_URL = "https://authkitbackend.devbro.site";
+const API_URL =
+  "http://localhost:8000";
 
 export async function getCurrentUser() {
-  const response = await fetch(`${API_URL}/sdk/me`, {
-    credentials: "include",
-  });
+
+  const response = await fetch(
+    `${API_URL}/sdk/me`,
+    {
+      credentials: "include",
+    }
+  );
 
   if (!response.ok) {
     return null;
@@ -13,9 +18,13 @@ export async function getCurrentUser() {
 }
 
 export async function signOutRequest() {
-  await fetch(`${API_URL}/sdk/signout`, {
-    method: "POST",
 
-    credentials: "include",
-  });
+  await fetch(
+    `${API_URL}/sdk/signout`,
+    {
+      method: "POST",
+
+      credentials: "include",
+    }
+  );
 }
