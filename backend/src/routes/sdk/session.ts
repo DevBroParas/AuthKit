@@ -30,6 +30,7 @@ router.get(
   async (req, res) => {
 
     try {
+      res.set("Cache-Control", "no-store");
 
       const user =
         await db.query.users.findFirst({

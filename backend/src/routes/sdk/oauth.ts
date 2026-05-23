@@ -19,11 +19,62 @@ import { githubProvider } from "../../provides/github.js";
 
 import { googleProvider } from "../../provides/google.js";
 
-import { createSdkAccessToken } from "../../lib/sdk-jwt.js";
+import {
+  createSdkAccessToken,
+} from "../../lib/sdk-jwt.js";
 
 import { setAuthCookies } from "../../lib/sdk-cookies.js";
 
 const router = Router();
+
+const exchangeCodes = new Map<
+  string,
+  {
+    userId: string;
+    projectId: string;
+    expiresAt: number;
+  }
+>();
+
+function createExchangeCode(
+  userId: string,
+  projectId: string,
+) {
+  const code = crypto.randomUUID();
+
+  exchangeCodes.set(code, {
+    userId,
+    projectId,
+    expiresAt: Date.now() + 1000 * 60,
+  });
+
+  return code;
+}
+
+function consumeExchangeCode(
+  code: string
+) {
+  const entry = exchangeCodes.get(code);
+
+  exchangeCodes.delete(code);
+
+  if (!entry || entry.expiresAt < Date.now()) {
+    return null;
+  }
+
+  return entry;
+}
+
+function redirectWithExchangeCode(
+  redirectUrl: string,
+  exchangeCode: string,
+) {
+  const url = new URL(redirectUrl);
+
+  url.searchParams.set("authkit_code", exchangeCode);
+
+  return url.toString();
+}
 
 /* =========================
    START GITHUB OAUTH
@@ -209,7 +260,17 @@ router.get("/github/callback", async (req, res) => {
 
     setAuthCookies(res, accessToken, refreshToken);
 
-    return res.redirect(redirectUrl);
+    const exchangeCode = createExchangeCode(
+      user.id,
+      projectId,
+    );
+
+    return res.redirect(
+      redirectWithExchangeCode(
+        redirectUrl,
+        exchangeCode,
+      ),
+    );
   } catch (error) {
     console.log(error);
 
@@ -412,11 +473,64 @@ router.get("/google/callback", async (req, res) => {
 
     setAuthCookies(res, accessToken, refreshToken);
 
-    return res.redirect(redirectUrl);
+    const exchangeCode = createExchangeCode(
+      user.id,
+      projectId,
+    );
+
+    return res.redirect(
+      redirectWithExchangeCode(
+        redirectUrl,
+        exchangeCode,
+      ),
+    );
   } catch (error) {
     console.log(error);
 
     return res.status(500).send("Google OAuth failed");
+  }
+});
+
+router.post("/exchange", async (req, res) => {
+  try {
+    const code = req.body?.code?.toString();
+
+    if (!code) {
+      return res.status(400).send("Missing code");
+    }
+
+    const payload = consumeExchangeCode(code);
+
+    if (!payload) {
+      return res.status(401).send("Invalid code");
+    }
+
+    const user = await db.query.users.findFirst({
+      where: and(
+        eq(users.id, payload.userId),
+
+        eq(users.projectId, payload.projectId),
+      ),
+    });
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    const accessToken = await createSdkAccessToken({
+      userId: payload.userId,
+
+      projectId: payload.projectId,
+    });
+
+    return res.json({
+      accessToken,
+      user,
+    });
+  } catch (error) {
+    console.log(error);
+
+    return res.status(401).send("Invalid code");
   }
 });
 

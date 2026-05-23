@@ -16,7 +16,16 @@ export async function requireSdkAuth(
 
   try {
 
+    const authorization =
+      req.headers.authorization;
+
+    const bearerToken =
+      authorization?.startsWith("Bearer ")
+        ? authorization.slice("Bearer ".length)
+        : null;
+
     const token =
+      bearerToken ||
       req.cookies.sdk_access_token;
 
     if (!token) {
