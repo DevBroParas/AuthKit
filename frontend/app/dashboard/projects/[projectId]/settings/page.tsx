@@ -56,7 +56,7 @@ import {
     Badge,
 } from "@/components/ui/badge";
 
-import {API_URL} from "@/lib/api";
+import { API_URL } from "@/lib/api";
 
 export default function ProjectSettingsPage() {
 
@@ -83,6 +83,13 @@ export default function ProjectSettingsPage() {
 
     const [providers, setProviders] =
         useState<any[]>([]);
+
+    const [
+        providerDrafts,
+        setProviderDrafts,
+    ] = useState<Record<string, boolean>>(
+        {}
+    );
 
     const [copied, setCopied] =
         useState<string | null>(null);
@@ -157,6 +164,16 @@ export default function ProjectSettingsPage() {
 
                 setProviders(data);
 
+                const mapped =
+                    Object.fromEntries(
+                        data.map((p: any) => [
+                            p.provider,
+                            p.enabled,
+                        ])
+                    );
+
+                setProviderDrafts(mapped);
+
             } catch (error) {
 
                 console.log(error);
@@ -225,31 +242,40 @@ export default function ProjectSettingsPage() {
             }
         };
 
-    const toggleProvider =
-        async (
-            provider: string,
-            enabled: boolean
-        ) => {
+    const saveProviders =
+        async () => {
 
             try {
 
-                await fetch(
-                    `${API_URL}/projects/${projectId}/providers/${provider}`,
-                    {
-                        method: "PATCH",
+                await Promise.all(
 
-                        headers: {
-                            "Content-Type":
-                                "application/json",
+                    Object.entries(
+                        providerDrafts
+                    ).map(
+                        async (
+                            [provider, enabled]
+                        ) => {
 
-                            Authorization:
-                                `Bearer ${getToken()}`,
-                        },
+                            await fetch(
+                                `${API_URL}/projects/${projectId}/providers/${provider}`,
+                                {
+                                    method: "PATCH",
 
-                        body: JSON.stringify({
-                            enabled,
-                        }),
-                    }
+                                    headers: {
+                                        "Content-Type":
+                                            "application/json",
+
+                                        Authorization:
+                                            `Bearer ${getToken()}`,
+                                    },
+
+                                    body: JSON.stringify({
+                                        enabled,
+                                    }),
+                                }
+                            );
+                        }
+                    )
                 );
 
                 fetchProviders();
@@ -561,15 +587,19 @@ export default function ProjectSettingsPage() {
 
                                 <Switch
                                     checked={
-                                        current?.enabled ||
-                                        false
+                                        providerDrafts[
+                                        provider
+                                        ] || false
                                     }
                                     onCheckedChange={(
                                         checked
                                     ) =>
-                                        toggleProvider(
-                                            provider,
-                                            checked
+                                        setProviderDrafts(
+                                            (prev) => ({
+                                                ...prev,
+                                                [provider]:
+                                                    checked,
+                                            })
                                         )
                                     }
                                 />
@@ -577,6 +607,18 @@ export default function ProjectSettingsPage() {
                             </div>
                         );
                     })}
+
+                    <div className="flex justify-end pt-2">
+
+                        <Button
+                            onClick={saveProviders}
+                            className="gap-2"
+                        >
+                            <Save className="h-4 w-4" />
+                            Save Providers
+                        </Button>
+
+                    </div>
 
                 </CardContent>
 

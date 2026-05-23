@@ -9,3 +9,7 @@ export { SignedIn } from "./components/SignedIn";
 export { SignedOut } from "./components/SignedOut";
 
 export { AuthButton } from "./components/AuthButton";
+
+export { LoginCard } from "./components/LoginCard";
+
+export { ProfileCard } from "./components/ProfileCard";
