@@ -11,6 +11,7 @@ import {
   sessions,
   projectProviders,
   authorizedDomains,
+  userProjectStatus,
 } from "../../db/schema.js";
 
 import { eq, and } from "drizzle-orm";
@@ -19,9 +20,7 @@ import { githubProvider } from "../../provides/github.js";
 
 import { googleProvider } from "../../provides/google.js";
 
-import {
-  createSdkAccessToken,
-} from "../../lib/sdk-jwt.js";
+import { createSdkAccessToken } from "../../lib/sdk-jwt.js";
 
 import { setAuthCookies } from "../../lib/sdk-cookies.js";
 
@@ -36,10 +35,7 @@ const exchangeCodes = new Map<
   }
 >();
 
-function createExchangeCode(
-  userId: string,
-  projectId: string,
-) {
+function createExchangeCode(userId: string, projectId: string) {
   const code = crypto.randomUUID();
 
   exchangeCodes.set(code, {
@@ -51,9 +47,7 @@ function createExchangeCode(
   return code;
 }
 
-function consumeExchangeCode(
-  code: string
-) {
+function consumeExchangeCode(code: string) {
   const entry = exchangeCodes.get(code);
 
   exchangeCodes.delete(code);
@@ -65,10 +59,7 @@ function consumeExchangeCode(
   return entry;
 }
 
-function redirectWithExchangeCode(
-  redirectUrl: string,
-  exchangeCode: string,
-) {
+function redirectWithExchangeCode(redirectUrl: string, exchangeCode: string) {
   const url = new URL(redirectUrl);
 
   url.searchParams.set("authkit_code", exchangeCode);
@@ -236,6 +227,20 @@ router.get("/github/callback", async (req, res) => {
       });
     }
 
+    const existingStatus = await db.query.userProjectStatus.findFirst({
+      where: and(
+        eq(userProjectStatus.userId, user.id),
+        eq(userProjectStatus.projectId, projectId),
+      ),
+    });
+
+    if (!existingStatus) {
+      await db.insert(userProjectStatus).values({
+        userId: user.id,
+        projectId,
+      });
+    }
+
     const refreshToken = crypto.randomUUID();
 
     await db.insert(sessions).values({
@@ -260,17 +265,9 @@ router.get("/github/callback", async (req, res) => {
 
     setAuthCookies(res, accessToken, refreshToken);
 
-    const exchangeCode = createExchangeCode(
-      user.id,
-      projectId,
-    );
+    const exchangeCode = createExchangeCode(user.id, projectId);
 
-    return res.redirect(
-      redirectWithExchangeCode(
-        redirectUrl,
-        exchangeCode,
-      ),
-    );
+    return res.redirect(redirectWithExchangeCode(redirectUrl, exchangeCode));
   } catch (error) {
     console.log(error);
 
@@ -449,6 +446,20 @@ router.get("/google/callback", async (req, res) => {
       });
     }
 
+    const existingStatus = await db.query.userProjectStatus.findFirst({
+      where: and(
+        eq(userProjectStatus.userId, user.id),
+        eq(userProjectStatus.projectId, projectId),
+      ),
+    });
+
+    if (!existingStatus) {
+      await db.insert(userProjectStatus).values({
+        userId: user.id,
+        projectId,
+      });
+    }
+
     const refreshToken = crypto.randomUUID();
 
     await db.insert(sessions).values({
@@ -473,17 +484,9 @@ router.get("/google/callback", async (req, res) => {
 
     setAuthCookies(res, accessToken, refreshToken);
 
-    const exchangeCode = createExchangeCode(
-      user.id,
-      projectId,
-    );
+    const exchangeCode = createExchangeCode(user.id, projectId);
 
-    return res.redirect(
-      redirectWithExchangeCode(
-        redirectUrl,
-        exchangeCode,
-      ),
-    );
+    return res.redirect(redirectWithExchangeCode(redirectUrl, exchangeCode));
   } catch (error) {
     console.log(error);
 

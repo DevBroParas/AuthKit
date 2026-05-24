@@ -36,6 +36,13 @@
       "when": 1778668993995,
       "tag": "0004_puzzling_human_cannonball",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1779629398889,
+      "tag": "0005_lumpy_wiccan",
+      "breakpoints": true
     }
   ]
 }

@@ -87,3 +87,32 @@ export const authorizedDomains = pgTable("authorized_domains", {
 
   domain: text("domain").notNull(),
 });
+
+export const userProjectStatus =
+  pgTable(
+    "user_project_status",
+    {
+
+      id: uuid("id")
+        .defaultRandom()
+        .primaryKey(),
+
+      userId: uuid("user_id")
+        .references(() => users.id)
+        .notNull(),
+
+      projectId: uuid("project_id")
+        .references(() => projects.id)
+        .notNull(),
+
+      blocked:
+        boolean("blocked")
+          .default(false)
+          .notNull(),
+
+      createdAt:
+        timestamp("created_at")
+          .defaultNow()
+          .notNull(),
+    }
+  );
