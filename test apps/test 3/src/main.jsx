@@ -7,7 +7,7 @@ import { AuthKitProvider } from "@authcit/react";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthKitProvider publishableKey="pk_78c7dbeb62a8645c2c793c41c100f35e1d292c1adeb9eebc">
+    <AuthKitProvider publishableKey="pk_d40ad8572efe3eb4ea5c4c6c20f63d412cde5f8add5d6045">
       <App />
     </AuthKitProvider>
   </StrictMode>,

@@ -239,6 +239,8 @@ router.get("/github/callback", async (req, res) => {
         userId: user.id,
         projectId,
       });
+    } else if (existingStatus.blocked) {
+      return res.status(403).send("User blocked");
     }
 
     const refreshToken = crypto.randomUUID();
@@ -458,6 +460,8 @@ router.get("/google/callback", async (req, res) => {
         userId: user.id,
         projectId,
       });
+    } else if (existingStatus.blocked) {
+      return res.status(403).send("User blocked");
     }
 
     const refreshToken = crypto.randomUUID();
