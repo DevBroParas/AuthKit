@@ -10,6 +10,8 @@ import { generatePublishableKey, generateSecretKey } from "../lib/keys.js";
 
 import { and, eq } from "drizzle-orm";
 
+import crypto from "crypto";
+
 const router = Router();
 
 /* =========================
@@ -62,6 +64,34 @@ router.get("/", requireAuth, async (req, res) => {
     return res.status(500).send("Failed to fetch projects");
   }
 });
+
+router.get(
+  "/keys",
+  requireAuth,
+  async (req, res) => {
+
+    try {
+
+      const result =
+        await db.query.projects.findMany({
+          where: eq(
+            projects.developerId,
+            req.developerId!
+          ),
+        });
+
+      return res.json(result);
+
+    } catch (error) {
+
+      console.log(error);
+
+      return res
+        .status(500)
+        .send("Failed");
+    }
+  }
+);
 
 /* =========================
    GET SINGLE PROJECT
@@ -479,6 +509,85 @@ router.get(
     }
   }
 );
+
+router.post(
+  "/:projectId/regenerate",
+  requireAuth,
+  async (req, res) => {
+
+    try {
+
+      const projectId =
+        req.params.projectId as string;
+
+      const {
+        type,
+      } = req.body;
+
+      const project =
+        await db.query.projects.findFirst({
+          where: and(
+            eq(
+              projects.id,
+              projectId
+            ),
+
+            eq(
+              projects.developerId,
+              req.developerId!
+            )
+          ),
+        });
+
+      if (!project) {
+
+        return res
+          .status(404)
+          .send("Project not found");
+      }
+
+      const newKey =
+        `${
+          type === "secret"
+            ? "sk"
+            : "pk"
+        }_${crypto
+          .randomBytes(24)
+          .toString("hex")}`;
+
+      await db
+        .update(projects)
+        .set({
+          [type === "secret"
+            ? "secretKey"
+            : "publishableKey"]:
+              newKey,
+        })
+        .where(
+          eq(
+            projects.id,
+            projectId
+          )
+        );
+
+      return res.json({
+        key: newKey,
+      });
+
+    } catch (error) {
+
+      console.log(error);
+
+      return res
+        .status(500)
+        .send("Failed");
+    }
+  }
+);
+
+
+
+
 
 /* =========================
    ADD DOMAIN
