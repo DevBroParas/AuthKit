@@ -139,15 +139,6 @@ const Login = () => {
                         Github
                     </Button>
 
-                    <Button
-                        variant="secondary"
-                        size="xl"
-                        loading={loading}
-                        className="text-base sm:text-lg py-6 hover:bg-primary hover:text-primary-foreground w-full flex items-center justify-center gap-3"
-                    >
-                        <img src="/apple-50.png" className="w-6 sm:w-8" />
-                        Apple
-                    </Button>
                 </div>
             </div>
 

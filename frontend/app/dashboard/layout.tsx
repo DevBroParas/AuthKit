@@ -81,14 +81,10 @@ const items = [
   },
   {
     title: "Docs",
-    url: "/dashboard/docs",
+    url: "/docs",
     icon: FileText,
   },
-  {
-    title: "Settings",
-    url: "/dashboard/settings",
-    icon: Settings,
-  },
+
 ];
 
 export default function DashboardLayout({
@@ -183,9 +179,9 @@ export default function DashboardLayout({
   return (
     <SidebarProvider>
 
-      <div className="flex min-h-screen w-full bg-muted/30">
+      <div className="flex min-h-screen w-full bg-background">
 
-        <Sidebar className="border-r bg-white">
+        <Sidebar className="border-r border-border bg-background">
 
           <SidebarHeader className="h-20 border-b flex justify-center items-center px-6 cursor-pointer">
             <Link href="/">
@@ -252,7 +248,7 @@ export default function DashboardLayout({
 
                 <button className="w-full">
 
-                  <div className="flex items-center justify-between gap-3 border bg-muted/50 p-3 hover:bg-muted transition">
+                  <div className="flex items-center justify-between gap-3 border border-border bg-muted/50 p-3 hover:bg-muted transition">
 
                     <div className="flex items-center gap-3 overflow-hidden">
 
