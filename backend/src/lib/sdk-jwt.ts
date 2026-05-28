@@ -7,9 +7,6 @@ const secret = new TextEncoder().encode(
   process.env.JWT_SECRET!
 );
 
-/* =========================
-   CREATE ACCESS TOKEN
-========================= */
 
 export async function createSdkAccessToken(
   payload: {
@@ -31,9 +28,6 @@ export async function createSdkAccessToken(
     .sign(secret);
 }
 
-/* =========================
-   VERIFY ACCESS TOKEN
-========================= */
 
 export async function verifySdkAccessToken(
   token: string

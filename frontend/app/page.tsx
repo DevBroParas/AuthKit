@@ -1,12 +1,24 @@
+import { CodeExample } from "@/components/landing/code-example";
+import { CTA } from "@/components/landing/cta";
+import { Features } from "@/components/landing/features";
+import { Footer } from "@/components/landing/footer";
+import { Header } from "@/components/landing/header";
+import { Hero } from "@/components/landing/hero";
+import { ModeToggle } from "@/components/modeSwitch";
 import { Button } from "@/components/ui/button";
+
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
-      <Button size="lg">Button</Button>
-    </main>
+    <div>
+      <Header />
+      <main>
+        <Hero />
+        <Features />
+        <CodeExample />
+        <CTA />
+      </main>
+    </div>
+
   )
 }

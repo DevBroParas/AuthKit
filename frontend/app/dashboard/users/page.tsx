@@ -200,7 +200,6 @@ export default function UsersPage() {
 
         <div className="space-y-8 pb-10">
 
-            {/* HEADER */}
 
             <div>
 
@@ -214,7 +213,6 @@ export default function UsersPage() {
 
             </div>
 
-            {/* FILTERS */}
 
             <Card className="border-0 shadow-sm">
 
@@ -284,7 +282,6 @@ export default function UsersPage() {
 
             </Card>
 
-            {/* USERS TABLE */}
 
             <Card className="border-0 shadow-sm">
 

@@ -102,14 +102,12 @@ const Login = () => {
     return (
         <div className="flex flex-col lg:flex-row h-screen w-screen overflow-hidden relative">
 
-            {/* Logo */}
             <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20 px-4 py-2 rounded-2xl backdrop-blur-md bg-white/20 border border-white/20 pointer-events-none">
                 <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-black">
-                    Auth<span className="text-[#322A97]">KIT</span>
+                    Auth<span className="text-[#322A97]">Cit</span>
                 </h1>
             </div>
 
-            {/* Left Section */}
             <div className="w-full lg:w-1/2 flex items-center justify-center px-6 sm:px-10 lg:px-20 pt-32 lg:pt-0 z-10">
                 <div className="flex flex-col items-center lg:items-start justify-center gap-4 w-full max-w-md">
 
@@ -153,7 +151,6 @@ const Login = () => {
                 </div>
             </div>
 
-            {/* Right Image Section */}
             <div className="hidden lg:flex lg:w-1/2 items-end justify-end">
                 <img
                     src="/login-art.jpg"

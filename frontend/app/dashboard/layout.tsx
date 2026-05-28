@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {API_URL} from "@/lib/api"
+import { API_URL } from "@/lib/api"
 
 import {
   LayoutDashboard,
@@ -49,6 +49,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { ModeToggle } from "@/components/modeSwitch";
 
 type Developer = {
   id: string;
@@ -184,23 +185,20 @@ export default function DashboardLayout({
 
       <div className="flex min-h-screen w-full bg-muted/30">
 
-        {/* Sidebar */}
         <Sidebar className="border-r bg-white">
 
-          {/* Header */}
           <SidebarHeader className="h-20 border-b flex justify-center items-center px-6 cursor-pointer">
             <Link href="/">
-            <h1 className="text-4xl font-bold tracking-tight">
-              Auth
-              <span className="text-primary">
-                KIT
-              </span>
-            </h1>
+              <h1 className="text-4xl font-bold tracking-tight">
+                Auth
+                <span className="text-primary">
+                  CIT
+                </span>
+              </h1>
             </Link>
 
           </SidebarHeader>
 
-          {/* Navigation */}
           <SidebarContent className="p-4">
 
             <SidebarMenu>
@@ -246,7 +244,6 @@ export default function DashboardLayout({
 
           </SidebarContent>
 
-          {/* Footer */}
           <SidebarFooter className="border-t p-4">
 
             <DropdownMenu>
@@ -315,14 +312,10 @@ export default function DashboardLayout({
 
         </Sidebar>
 
-        {/* Main Section */}
         <div className="flex flex-1 flex-col">
 
-          {/* Top Navbar */}
-          <header className="h-20 border-b bg-white px-8 flex items-center justify-between">
-
+          <header className="h-20 border-b border-border bg-background px-8 flex items-center justify-between text-foreground">
             <div>
-
               <h2 className="text-2xl font-semibold tracking-tight">
                 Dashboard
               </h2>
@@ -330,28 +323,26 @@ export default function DashboardLayout({
               <p className="text-sm text-muted-foreground mt-1">
                 Manage your authentication platform.
               </p>
-
             </div>
+
+
 
             <div className="flex items-center gap-4">
-
-              <Button variant="outline">
-                My SaaS App
-              </Button>
-
+              <div className="flex items-center gap-4">
+                <ModeToggle />
+              </div>
               <Button className="gap-2">
-
-                <Plus className="h-4 w-4" />
-
-                Create Project
-
+                <Link
+                  href="/dashboard/projects"
+                  className="flex items-center gap-2"
+                >
+                  <Plus className="h-4 w-4" />
+                  Create Project
+                </Link>
               </Button>
-
             </div>
-
           </header>
 
-          {/* Content */}
           <main className="flex-1 p-8 overflow-auto">
             {children}
           </main>

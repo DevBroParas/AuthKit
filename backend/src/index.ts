@@ -8,6 +8,7 @@ import authRoutes from "./routes/auth.js";
 import authMeRoutes from "./routes/auth-me.js";
 import projectRoutes from "./routes/projects.js";
 import userRoutes from "./routes/users.js";
+import dashboardRoutes from "./routes/dashboard.js";
 
 import sdkOauthRoutes from "./routes/sdk/oauth.js";
 
@@ -27,7 +28,7 @@ app.use(
 app.use(cookieParser());
 
 app.get("/", (_, res) => {
-  res.send("AuthKit API Running");
+  res.send("AuthCit API Running");
 });
 
 app.use("/auth", authRoutes);
@@ -37,6 +38,8 @@ app.use("/me", authMeRoutes);
 app.use("/projects", projectRoutes);
 
 app.use("/users", userRoutes);
+
+app.use("/dashboard", dashboardRoutes);
 
 app.use("/sdk/oauth", sdkOauthRoutes);
 

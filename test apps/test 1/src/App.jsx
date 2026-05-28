@@ -36,7 +36,7 @@ export default function App() {
     >
 
       <h1>
-        AuthKIT SDK Test
+        AuthCit SDK Test
       </h1>
 
       <SignedOut>

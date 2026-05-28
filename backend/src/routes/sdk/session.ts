@@ -20,10 +20,7 @@ import {
 
 const router = Router();
 
-/* =========================
-   CURRENT USER
-========================= */
-
+// GET /sdk/me
 router.get(
   "/me",
   requireSdkAuth,
@@ -53,10 +50,7 @@ router.get(
   }
 );
 
-/* =========================
-   SIGN OUT
-========================= */
-
+// POST /sdk/signout
 router.post(
   "/signout",
   async (_, res) => {

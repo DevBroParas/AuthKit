@@ -67,10 +67,7 @@ function redirectWithExchangeCode(redirectUrl: string, exchangeCode: string) {
   return url.toString();
 }
 
-/* =========================
-   START GITHUB OAUTH
-========================= */
-
+// GET /sdk/oauth/github/start
 router.get("/github/start", async (req, res) => {
   try {
     const publishableKey = req.query.publishableKey?.toString();
@@ -155,10 +152,7 @@ router.get("/github/start", async (req, res) => {
   }
 });
 
-/* =========================
-   GITHUB CALLBACK
-========================= */
-
+// GET /sdk/oauth/github/callback
 router.get("/github/callback", async (req, res) => {
   try {
     const code = req.query.code?.toString();
@@ -281,6 +275,7 @@ function generateCodeVerifier() {
   return crypto.randomBytes(32).toString("hex");
 }
 
+// GET /sdk/oauth/google/start
 router.get("/google/start", async (req, res) => {
   try {
     const publishableKey = req.query.publishableKey?.toString();
@@ -370,6 +365,7 @@ router.get("/google/start", async (req, res) => {
   }
 });
 
+// GET /sdk/oauth/google/callback
 router.get("/google/callback", async (req, res) => {
   try {
     const code = req.query.code?.toString();
@@ -498,6 +494,7 @@ router.get("/google/callback", async (req, res) => {
   }
 });
 
+// POST /sdk/oauth/exchange
 router.post("/exchange", async (req, res) => {
   try {
     const code = req.body?.code?.toString();

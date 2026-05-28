@@ -14,10 +14,7 @@ import { createAccessToken } from "../lib/jwt.js";
 
 const router = Router();
 
-/* =========================
-   GITHUB OAUTH
-========================= */
-
+// GET /auth/github
 router.get("/github", async (req, res) => {
   try {
     const state = crypto.randomUUID();
@@ -39,6 +36,7 @@ router.get("/github", async (req, res) => {
   }
 });
 
+// GET /auth/github/callback
 router.get("/github/callback", async (req, res) => {
   try {
     const code = req.query.code?.toString();
@@ -59,7 +57,6 @@ router.get("/github/callback", async (req, res) => {
 
     const tokens = await github.validateAuthorizationCode(code);
 
-    // fetch github profile
     const githubUserResponse = await fetch("https://api.github.com/user", {
       headers: {
         Authorization: `Bearer ${tokens.accessToken()}`,
@@ -72,7 +69,6 @@ router.get("/github/callback", async (req, res) => {
 
     const githubUser = await githubUserResponse.json();
 
-    // fetch github emails
     const emailResponse = await fetch("https://api.github.com/user/emails", {
       headers: {
         Authorization: `Bearer ${tokens.accessToken()}`,
@@ -83,7 +79,6 @@ router.get("/github/callback", async (req, res) => {
 
     const primaryEmail = emails.find((email: any) => email.primary)?.email;
 
-    // find existing developer
     let developer = await db.query.developers.findFirst({
       where: and(
         eq(developers.provider, "github"),
@@ -92,7 +87,6 @@ router.get("/github/callback", async (req, res) => {
       ),
     });
 
-    // create developer
     if (!developer) {
       const newDevelopers = await db
         .insert(developers)
@@ -112,12 +106,10 @@ router.get("/github/callback", async (req, res) => {
       developer = newDevelopers[0];
     }
 
-    // create jwt
     const token = await createAccessToken({
       userId: developer.id,
     });
 
-    // redirect frontend
     res.redirect(`${process.env.FRONTEND_URL}/auth/callback?token=${token}`);
   } catch (error) {
     console.log(error);
@@ -126,10 +118,7 @@ router.get("/github/callback", async (req, res) => {
   }
 });
 
-/* =========================
-   GOOGLE OAUTH
-========================= */
-
+// GET /auth/google
 router.get("/google", async (req, res) => {
   try {
     const state = generateState();
@@ -142,7 +131,6 @@ router.get("/google", async (req, res) => {
       "profile",
     ]);
 
-    // store state
     res.cookie("google_oauth_state", state, {
       httpOnly: true,
       secure: false,
@@ -150,7 +138,6 @@ router.get("/google", async (req, res) => {
       maxAge: 1000 * 60 * 10,
     });
 
-    // store pkce verifier
     res.cookie("google_code_verifier", codeVerifier, {
       httpOnly: true,
       secure: false,
@@ -166,6 +153,7 @@ router.get("/google", async (req, res) => {
   }
 });
 
+// GET /auth/google/callback
 router.get("/google/callback", async (req, res) => {
   try {
     const code = req.query.code?.toString();
@@ -176,28 +164,23 @@ router.get("/google/callback", async (req, res) => {
 
     const storedCodeVerifier = req.cookies.google_code_verifier;
 
-    // validate params
     if (!code || !state || !storedState || !storedCodeVerifier) {
       return res.status(400).send("Missing params");
     }
 
-    // validate state
     if (state !== storedState) {
       return res.status(400).send("Invalid state");
     }
 
-    // clear cookies
     res.clearCookie("google_oauth_state");
 
     res.clearCookie("google_code_verifier");
 
-    // exchange code
     const tokens = await google.validateAuthorizationCode(
       code,
       storedCodeVerifier,
     );
 
-    // fetch google profile
     const googleUserResponse = await fetch(
       "https://www.googleapis.com/oauth2/v2/userinfo",
       {
@@ -213,7 +196,6 @@ router.get("/google/callback", async (req, res) => {
 
     const googleUser = await googleUserResponse.json();
 
-    // find existing developer
     let developer = await db.query.developers.findFirst({
       where: and(
         eq(developers.provider, "google"),
@@ -222,7 +204,6 @@ router.get("/google/callback", async (req, res) => {
       ),
     });
 
-    // create developer
     if (!developer) {
       const newDevelopers = await db
         .insert(developers)
@@ -242,12 +223,10 @@ router.get("/google/callback", async (req, res) => {
       developer = newDevelopers[0];
     }
 
-    // create jwt
     const token = await createAccessToken({
       userId: developer.id,
     });
 
-    // redirect frontend
     res.redirect(`${process.env.FRONTEND_URL}/auth/callback?token=${token}`);
   } catch (error) {
     console.log(error);

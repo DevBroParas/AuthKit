@@ -411,7 +411,6 @@ export default function ProjectSettingsPage() {
     return (
         <div className="space-y-8 pb-10">
 
-            {/* HEADER */}
 
             <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
 
@@ -457,7 +456,6 @@ export default function ProjectSettingsPage() {
 
             </div>
 
-            {/* GENERAL */}
 
             <Card className="border-0 shadow-sm">
 
@@ -509,7 +507,6 @@ export default function ProjectSettingsPage() {
 
             </Card>
 
-            {/* PROVIDERS */}
 
             <Card className="border-0 shadow-sm">
 
@@ -624,7 +621,6 @@ export default function ProjectSettingsPage() {
 
             </Card>
 
-            {/* DOMAINS */}
 
             <Card className="border-0 shadow-sm">
 
@@ -635,7 +631,7 @@ export default function ProjectSettingsPage() {
                     </CardTitle>
 
                     <CardDescription className="text-base mt-2">
-                        Only these domains can use your AuthKIT project.
+                        Only these domains can use your AuthCit project.
                     </CardDescription>
 
                 </CardHeader>
@@ -716,7 +712,6 @@ export default function ProjectSettingsPage() {
 
             </Card>
 
-            {/* KEYS */}
 
             <Card className="border-0 shadow-sm">
 
@@ -819,7 +814,6 @@ export default function ProjectSettingsPage() {
 
             </Card>
 
-            {/* DANGER ZONE */}
 
             <Card className="border-red-200 shadow-sm">
 

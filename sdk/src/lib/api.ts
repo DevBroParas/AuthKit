@@ -84,7 +84,7 @@ export async function exchangeOAuthCode(
 
   if (!response.ok) {
     throw new Error(
-      "Failed to exchange AuthKit code"
+      "Failed to exchange AuthCit code"
     );
   }
 

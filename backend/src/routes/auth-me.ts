@@ -10,6 +10,7 @@ import { verifyAccessToken } from "../lib/jwt.js";
 
 const router = Router();
 
+// GET /me
 router.get("/", async (req, res) => {
   try {
 

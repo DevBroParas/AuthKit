@@ -190,7 +190,6 @@ export default function ProjectPage() {
     return (
         <div className="space-y-8">
 
-            {/* HEADER */}
 
             <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
 
@@ -245,7 +244,6 @@ export default function ProjectPage() {
 
             </div>
 
-            {/* FILTERS */}
 
             <Tabs defaultValue="7d">
 
@@ -267,11 +265,9 @@ export default function ProjectPage() {
 
             </Tabs>
 
-            {/* GRID */}
 
             <div className="grid grid-cols-12 gap-6">
 
-                {/* TOTAL USERS */}
 
                 <Card className="col-span-12 md:col-span-6 xl:col-span-3 border-0 shadow-sm">
 
@@ -309,7 +305,6 @@ export default function ProjectPage() {
 
                 </Card>
 
-                {/* SESSIONS */}
 
                 <Card className="col-span-12 md:col-span-6 xl:col-span-3 border-0 shadow-sm">
 
@@ -343,7 +338,6 @@ export default function ProjectPage() {
 
                 </Card>
 
-                {/* PROJECT ID */}
 
                 <Card className="col-span-12 md:col-span-6 xl:col-span-3 border-0 shadow-sm">
 
@@ -398,7 +392,6 @@ export default function ProjectPage() {
 
                 </Card>
 
-                {/* PROVIDERS */}
 
                 <Card className="col-span-12 md:col-span-6 xl:col-span-3 border-0 shadow-sm">
 
@@ -441,7 +434,6 @@ export default function ProjectPage() {
 
                 </Card>
 
-                {/* GRAPH */}
 
                 <Card className="col-span-12 xl:col-span-8 border-0 shadow-sm overflow-hidden">
 
@@ -510,7 +502,6 @@ export default function ProjectPage() {
 
                 </Card>
 
-                {/* RECENT USERS */}
 
                 <Card className="col-span-12 xl:col-span-4 border-0 shadow-sm">
 
@@ -569,7 +560,6 @@ export default function ProjectPage() {
 
                 </Card>
 
-                {/* KEYS */}
 
                 <Card className="col-span-12 xl:col-span-7 border-0 shadow-sm">
 
@@ -587,7 +577,6 @@ export default function ProjectPage() {
 
                     <CardContent className="space-y-6">
 
-                        {/* PK */}
 
                         <div className="space-y-2">
 
@@ -636,7 +625,6 @@ export default function ProjectPage() {
 
                         </div>
 
-                        {/* SK */}
 
                         <div className="space-y-2">
 
@@ -689,7 +677,6 @@ export default function ProjectPage() {
 
                 </Card>
 
-                {/* SDK */}
 
                 <Card className="col-span-12 xl:col-span-5 border-0 shadow-sm">
 

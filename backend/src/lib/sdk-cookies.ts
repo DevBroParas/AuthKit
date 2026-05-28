@@ -5,7 +5,6 @@ export function setAuthCookies(
   accessToken: string,
   refreshToken: string,
 ) {
-  // ACCESS TOKEN
 
   res.cookie("sdk_access_token", accessToken, {
     httpOnly: true,
@@ -17,7 +16,6 @@ export function setAuthCookies(
     maxAge: 1000 * 60 * 15,
   });
 
-  // REFRESH TOKEN
 
   res.cookie("sdk_refresh_token", refreshToken, {
     httpOnly: true,

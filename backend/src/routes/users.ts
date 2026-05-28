@@ -15,10 +15,7 @@ import { requireAuth } from "../middleware/auth.js";
 
 const router = Router();
 
-/* =========================
-   GET USERS
-========================= */
-
+// GET /users
 router.get("/", requireAuth, async (req, res) => {
   try {
     const search = req.query.search as string;
@@ -53,17 +50,14 @@ router.get("/", requireAuth, async (req, res) => {
       .leftJoin(oauthAccounts, eq(oauthAccounts.userId, users.id));
     const conditions = [];
 
-    // ONLY OWN PROJECTS
 
     conditions.push(eq(projects.developerId, req.developerId!));
 
-    // FILTER PROJECT
 
     if (projectId) {
       conditions.push(eq(projects.id, projectId));
     }
 
-    // SEARCH
 
     if (search) {
       conditions.push(
@@ -85,10 +79,7 @@ router.get("/", requireAuth, async (req, res) => {
   }
 });
 
-/* =========================
-   BLOCK / UNBLOCK USER
-========================= */
-
+// PATCH /users/:userId/projects/:projectId
 router.patch("/:userId/projects/:projectId", requireAuth, async (req, res) => {
   try {
     const userId = req.params.userId as string;
@@ -97,7 +88,6 @@ router.patch("/:userId/projects/:projectId", requireAuth, async (req, res) => {
 
     const { blocked } = req.body;
 
-    // verify ownership
 
     const project = await db.query.projects.findFirst({
       where: and(
@@ -111,7 +101,6 @@ router.patch("/:userId/projects/:projectId", requireAuth, async (req, res) => {
       return res.status(404).send("Project not found");
     }
 
-    // update user status
 
     await db
       .update(userProjectStatus)

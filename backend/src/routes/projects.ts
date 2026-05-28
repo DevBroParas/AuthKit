@@ -14,10 +14,7 @@ import crypto from "crypto";
 
 const router = Router();
 
-/* =========================
-   CREATE PROJECT
-========================= */
-
+// POST /projects
 router.post("/", requireAuth, async (req, res) => {
   try {
     const { name } = req.body;
@@ -47,10 +44,7 @@ router.post("/", requireAuth, async (req, res) => {
   }
 });
 
-/* =========================
-   GET ALL PROJECTS
-========================= */
-
+// GET /projects
 router.get("/", requireAuth, async (req, res) => {
   try {
     const developerProjects = await db.query.projects.findMany({
@@ -65,6 +59,7 @@ router.get("/", requireAuth, async (req, res) => {
   }
 });
 
+// GET /projects/keys
 router.get(
   "/keys",
   requireAuth,
@@ -93,10 +88,7 @@ router.get(
   }
 );
 
-/* =========================
-   GET SINGLE PROJECT
-========================= */
-
+// GET /projects/:projectId
 router.get("/:projectId", requireAuth, async (req, res) => {
   try {
     const projectId = req.params.projectId as string;
@@ -121,10 +113,7 @@ router.get("/:projectId", requireAuth, async (req, res) => {
   }
 });
 
-/* =========================
-   UPDATE PROJECT
-========================= */
-
+// PATCH /projects/:projectId
 router.patch("/:projectId", requireAuth, async (req, res) => {
   try {
     const projectId = req.params.projectId as string;
@@ -135,7 +124,6 @@ router.patch("/:projectId", requireAuth, async (req, res) => {
       return res.status(400).send("Project name required");
     }
 
-    // check ownership
     const existingProject = await db.query.projects.findFirst({
       where: and(
         eq(projects.id, projectId),
@@ -148,7 +136,6 @@ router.patch("/:projectId", requireAuth, async (req, res) => {
       return res.status(404).send("Project not found");
     }
 
-    // update
     const updatedProjects = await db
       .update(projects)
       .set({
@@ -165,10 +152,7 @@ router.patch("/:projectId", requireAuth, async (req, res) => {
   }
 });
 
-/* =========================
-   PROJECT OVERVIEW
-========================= */
-
+// GET /projects/:projectId/overview
 router.get(
   "/:projectId/overview",
   requireAuth,
@@ -179,7 +163,6 @@ router.get(
       const projectId =
         req.params.projectId as string;
 
-      // check ownership
       const project =
         await db.query.projects.findFirst({
           where: and(
@@ -201,7 +184,6 @@ router.get(
           .send("Project not found");
       }
 
-      // total users
       const totalUsers =
         await db.query.users.findMany({
           where: eq(
@@ -210,7 +192,6 @@ router.get(
           ),
         });
 
-      // sessions
       const activeSessions =
         await db.query.sessions.findMany({
           where: eq(
@@ -219,7 +200,6 @@ router.get(
           ),
         });
 
-      // providers
       const providers =
         await db.query.projectProviders.findMany({
           where: eq(
@@ -228,7 +208,6 @@ router.get(
           ),
         });
 
-      // recent users
       const recentUsers =
         await db.query.users.findMany({
           where: eq(
@@ -278,10 +257,7 @@ router.get(
   }
 );
 
-/* =========================
-   GET PROJECT PROVIDERS
-========================= */
-
+// GET /projects/:projectId/providers
 router.get(
   "/:projectId/providers",
   requireAuth,
@@ -292,7 +268,6 @@ router.get(
       const projectId =
         req.params.projectId as string;
 
-      // verify ownership
       const project =
         await db.query.projects.findFirst({
           where: and(
@@ -339,10 +314,7 @@ router.get(
   }
 );
 
-/* =========================
-   TOGGLE PROVIDER
-========================= */
-
+// PATCH /projects/:projectId/providers/:provider
 router.patch(
   "/:projectId/providers/:provider",
   requireAuth,
@@ -360,7 +332,6 @@ router.patch(
         enabled,
       } = req.body;
 
-      // verify ownership
       const project =
         await db.query.projects.findFirst({
           where: and(
@@ -397,7 +368,6 @@ router.patch(
           ),
         });
 
-      // create provider if doesn't exist
       if (!existingProvider) {
 
         const newProvider =
@@ -417,7 +387,6 @@ router.patch(
         );
       }
 
-      // update provider
       const updatedProvider =
         await db
           .update(projectProviders)
@@ -449,10 +418,7 @@ router.patch(
   }
 );
 
-/* =========================
-   GET AUTHORIZED DOMAINS
-========================= */
-
+// GET /projects/:projectId/domains
 router.get(
   "/:projectId/domains",
   requireAuth,
@@ -463,7 +429,6 @@ router.get(
       const projectId =
         req.params.projectId as string;
 
-      // verify ownership
       const project =
         await db.query.projects.findFirst({
           where: and(
@@ -510,6 +475,7 @@ router.get(
   }
 );
 
+// POST /projects/:projectId/regenerate
 router.post(
   "/:projectId/regenerate",
   requireAuth,
@@ -584,15 +550,7 @@ router.post(
     }
   }
 );
-
-
-
-
-
-/* =========================
-   ADD DOMAIN
-========================= */
-
+// POST /projects/:projectId/domains
 router.post(
   "/:projectId/domains",
   requireAuth,
@@ -613,7 +571,6 @@ router.post(
           .send("Domain required");
       }
 
-      // verify ownership
       const project =
         await db.query.projects.findFirst({
           where: and(
@@ -687,10 +644,7 @@ router.post(
   }
 );
 
-/* =========================
-   DELETE DOMAIN
-========================= */
-
+// DELETE /projects/:projectId/domains/:domainId
 router.delete(
   "/:projectId/domains/:domainId",
   requireAuth,
@@ -704,7 +658,6 @@ router.delete(
       const domainId =
         req.params.domainId as string;
 
-      // verify ownership
       const project =
         await db.query.projects.findFirst({
           where: and(
@@ -754,15 +707,11 @@ router.delete(
   }
 );
 
-/* =========================
-   DELETE PROJECT
-========================= */
-
+// DELETE /projects/:projectId
 router.delete("/:projectId", requireAuth, async (req, res) => {
   try {
     const projectId = req.params.projectId as string;
 
-    // check ownership
     const existingProject = await db.query.projects.findFirst({
       where: and(
         eq(projects.id, projectId),

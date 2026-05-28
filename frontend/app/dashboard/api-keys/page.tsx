@@ -166,7 +166,6 @@ export default function ApiKeysPage() {
 
         <div className="space-y-8 pb-10">
 
-            {/* HEADER */}
 
             <div>
 
@@ -180,7 +179,6 @@ export default function ApiKeysPage() {
 
             </div>
 
-            {/* TABLE */}
 
             <Card className="border-0 shadow-sm">
 
@@ -255,7 +253,6 @@ export default function ApiKeysPage() {
 
                                             </TableCell>
 
-                                            {/* PUBLISHABLE */}
 
                                             <TableCell>
 
@@ -285,7 +282,6 @@ export default function ApiKeysPage() {
 
                                             </TableCell>
 
-                                            {/* SECRET */}
 
                                             <TableCell>
 
@@ -344,7 +340,6 @@ export default function ApiKeysPage() {
 
                                             </TableCell>
 
-                                            {/* ACTIONS */}
 
                                             <TableCell className="text-right">
 
@@ -419,7 +414,6 @@ export default function ApiKeysPage() {
 
             </Card>
 
-            {/* DIALOG */}
 
             <Dialog
                 open={regenerateOpen}

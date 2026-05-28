@@ -104,9 +104,6 @@ export default function ProjectsPage() {
     const [editName, setEditName] =
         useState("");
 
-    /* =========================
-       FETCH PROJECTS
-    ========================= */
 
     const fetchProjects = async () => {
 
@@ -157,9 +154,6 @@ export default function ProjectsPage() {
 
     };
 
-    /* =========================
-       CREATE PROJECT
-    ========================= */
 
     const createProject = async () => {
 
@@ -194,9 +188,6 @@ export default function ProjectsPage() {
             const newProject =
                 await response.json();
 
-            /* =========================
-               SHOW KEYS ONLY ONCE
-            ========================= */
 
             setCreatedProject(newProject);
 
@@ -396,9 +387,6 @@ export default function ProjectsPage() {
                 </DialogContent>
 
             </Dialog>
-            {/* =========================
-       PROJECT CREATED DIALOG
-    ========================= */}
 
             <Dialog
                 open={!!createdProject}
@@ -428,9 +416,6 @@ export default function ProjectsPage() {
 
                     <div className="space-y-6 pt-4">
 
-                        {/* =========================
-             PUBLISHABLE KEY
-          ========================= */}
 
                         <div className="space-y-2">
 
@@ -483,9 +468,6 @@ export default function ProjectsPage() {
 
                         </div>
 
-                        {/* =========================
-             SECRET KEY
-          ========================= */}
 
                         <div className="space-y-2">
 
@@ -537,9 +519,6 @@ export default function ProjectsPage() {
 
                         </div>
 
-                        {/* =========================
-             WARNING BOX
-          ========================= */}
 
                         <div className="rounded-2xl border border-amber-200 bg-amber-50 p-5">
 
@@ -565,13 +544,9 @@ export default function ProjectsPage() {
 
             </Dialog>
 
-            {/* =========================
-       MAIN PAGE
-    ========================= */}
 
             <div className="space-y-8">
 
-                {/* PAGE HEADER */}
 
                 <div>
 
@@ -590,73 +565,12 @@ export default function ProjectsPage() {
 
                 </div>
 
-                {/* EXPLANATION CARDS */}
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-                    <Card>
-
-                        <CardHeader>
-
-                            <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-2">
-                                <Users className="h-6 w-6 text-primary" />
-                            </div>
-
-                            <CardTitle>
-                                Isolated Users
-                            </CardTitle>
-
-                            <CardDescription>
-                                Every project has completely separate users and sessions.
-                            </CardDescription>
-
-                        </CardHeader>
-
-                    </Card>
-
-                    <Card>
-
-                        <CardHeader>
-
-                            <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-2">
-                                <Shield className="h-6 w-6 text-primary" />
-                            </div>
-
-                            <CardTitle>
-                                Secure Authentication
-                            </CardTitle>
-
-                            <CardDescription>
-                                GitHub, Google, and future authentication providers.
-                            </CardDescription>
-
-                        </CardHeader>
-
-                    </Card>
-
-                    <Card>
-
-                        <CardHeader>
-
-                            <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-2">
-                                <KeyRound className="h-6 w-6 text-primary" />
-                            </div>
-
-                            <CardTitle>
-                                API Keys
-                            </CardTitle>
-
-                            <CardDescription>
-                                Secure publishable and secret keys for your applications.
-                            </CardDescription>
-
-                        </CardHeader>
-
-                    </Card>
 
                 </div>
 
-                {/* CREATE PROJECT */}
 
                 <Card>
 
@@ -669,7 +583,7 @@ export default function ProjectsPage() {
 
                         <CardDescription className="text-base leading-relaxed">
 
-                            Create a new application inside AuthKIT.
+                            Create a new application inside AuthCit.
 
                             Your project will receive API keys
                             for React and Next.js integrations.
@@ -727,7 +641,6 @@ export default function ProjectsPage() {
 
                 </Card>
 
-                {/* PROJECT LIST */}
 
                 <div className="space-y-4">
 
@@ -738,7 +651,7 @@ export default function ProjectsPage() {
                         </h2>
 
                         <p className="text-muted-foreground mt-1">
-                            Applications currently connected to AuthKIT.
+                            Applications currently connected to AuthCit.
                         </p>
 
                     </div>
@@ -793,7 +706,6 @@ export default function ProjectsPage() {
 
                                                 <DropdownMenuContent align="end">
 
-                                                    {/* EDIT */}
 
                                                     <DropdownMenuItem
                                                         onClick={() => {
@@ -811,7 +723,6 @@ export default function ProjectsPage() {
 
                                                     </DropdownMenuItem>
 
-                                                    {/* DELETE */}
 
                                                     <AlertDialog>
 
